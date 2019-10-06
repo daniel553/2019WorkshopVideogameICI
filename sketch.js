@@ -28,6 +28,7 @@ function draw() {
     flyGuy.show();
 
     //Show enemy
+    enemy.followGuy = flyGuy;
     enemy.move();
     if (enemy.poppedBallon(flyGuy)) {
         enemy.crashed(flyGuy);

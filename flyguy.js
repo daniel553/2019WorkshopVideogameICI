@@ -11,6 +11,7 @@ class FlyGuy {
         this.gravity = 0.3;
         this.ballon1 = undefined;
         this.ballon2 = undefined;
+        this.followGuy = undefined;
     }
 
     show() {
@@ -43,6 +44,14 @@ class FlyGuy {
             //right
             if (keyIsDown(RIGHT_ARROW)) {
                 this.vx = this.vx + 2;
+            }
+        } else {
+            //The bot
+            if (this.followGuy) {
+                if (Math.random() > 0.8) {
+                    this.vx = this.followGuy.x < this.x ? -3 : 3;
+                    this.vy = this.followGuy.y < this.y ? -3 : 3;
+                }
             }
         }
 
@@ -80,12 +89,12 @@ class FlyGuy {
 
     }
 
-    poppedBallon(guy){
-        if(this.ballon1 && !this.ballon1.popped){
+    poppedBallon(guy) {
+        if (this.ballon1 && !this.ballon1.popped) {
             this.ballon1.popped = this.ballonCollidedWithGuy(this.ballon1, guy);
             return this.ballon1.popped;
         }
-        if(this.ballon2 && !this.ballon2.popped){
+        if (this.ballon2 && !this.ballon2.popped) {
             this.ballon2.popped = this.ballonCollidedWithGuy(this.ballon2, guy);
             return this.ballon2.popped;
         }
@@ -95,8 +104,8 @@ class FlyGuy {
     /**
      * Uses a library called 2d collide, see in html import.
      */
-    ballonCollidedWithGuy(ballon, guy){
-        return collideRectRect(ballon.x,ballon.y,ballon.w,ballon.h,guy.x,guy.y,guy.w,guy.h);
+    ballonCollidedWithGuy(ballon, guy) {
+        return collideRectRect(ballon.x, ballon.y, ballon.w, ballon.h, guy.x, guy.y, guy.w, guy.h);
     }
 
     crashed(guy) {
@@ -123,13 +132,13 @@ class FlyGuy {
         }
     }
 
-    isDead(){
+    isDead() {
         //With 2 ballons
-        if(this.ballon1 && this.ballon2){
+        if (this.ballon1 && this.ballon2) {
             return this.ballon1.popped && this.ballon2.popped;
         }
         // With 1 ballon
-        if(this.ballon1 && !this.ballon2){
+        if (this.ballon1 && !this.ballon2) {
             return this.ballon1.popped;
         }
         return false;
