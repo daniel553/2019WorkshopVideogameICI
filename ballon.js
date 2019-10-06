@@ -7,14 +7,17 @@ class Ballon {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.color = color;
+        this.popped = false;
     }
 
     show() {
-        fill(this.color);
-        rect(this.x + this.offsetX, this.y + this.offsetY, this.w, this.h);
+        if (!this.popped) {
+            fill(this.color);
+            rect(this.x + this.offsetX, this.y + this.offsetY, this.w, this.h);
+        }
     }
 
-    updatePos(flyGuy){
+    updatePos(flyGuy) {
         this.x = flyGuy.x;
         this.y = flyGuy.y;
     }

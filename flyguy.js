@@ -79,4 +79,59 @@ class FlyGuy {
 
 
     }
+
+    poppedBallon(guy){
+        if(this.ballon1 && !this.ballon1.popped){
+            this.ballon1.popped = this.ballonCollidedWithGuy(this.ballon1, guy);
+            return this.ballon1.popped;
+        }
+        if(this.ballon2 && !this.ballon2.popped){
+            this.ballon2.popped = this.ballonCollidedWithGuy(this.ballon2, guy);
+            return this.ballon2.popped;
+        }
+        return false;
+    }
+
+    /**
+     * Uses a library called 2d collide, see in html import.
+     */
+    ballonCollidedWithGuy(ballon, guy){
+        return collideRectRect(ballon.x,ballon.y,ballon.w,ballon.h,guy.x,guy.y,guy.w,guy.h);
+    }
+
+    crashed(guy) {
+        //bounce the guys
+        if (!this.dead) {
+            if (this.vx > 0) {
+                this.vx *= -1;
+                if (this.vx > -10)
+                    this.vx = -12;
+            }
+
+            if (this.vx <= 0) {
+                this.vx *= -1;
+                if (this.vx < 10)
+                    this.vx = 12;
+            }
+
+            if (this.vy > 0) {
+                this.vy *= -1;
+                if (this.vy > -5)
+                    this.vy = -7;
+            }
+
+        }
+    }
+
+    isDead(){
+        //With 2 ballons
+        if(this.ballon1 && this.ballon2){
+            return this.ballon1.popped && this.ballon2.popped;
+        }
+        // With 1 ballon
+        if(this.ballon1 && !this.ballon2){
+            return this.ballon1.popped;
+        }
+        return false;
+    }
 }
