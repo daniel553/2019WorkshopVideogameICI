@@ -12,13 +12,14 @@ class FlyGuy {
         this.ballon1 = undefined;
         this.ballon2 = undefined;
         this.followGuy = undefined;
+        this.assets = {};
     }
 
     show() {
         //Draw body 
-        fill(this.color);
-        noStroke();
-        rect(this.x, this.y, this.w, this.h);
+        if(this.color == 'red'){
+            this.showFighter();
+        }
 
         if (this.ballon1) {
             this.ballon1.updatePos(this);
@@ -28,6 +29,11 @@ class FlyGuy {
             this.ballon2.updatePos(this);
             this.ballon2.show();
         }
+    }
+
+    showFighter() {
+        let f = this.vx < 0 ? this.assets['fighter-left'] : this.assets['fighter-right'];
+        image(f, this.x, this.y, this.w, this.h);
     }
 
     move() {
