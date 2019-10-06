@@ -1,58 +1,27 @@
 //VYC
-let colorKeyPressed = 'white'
-let mouseToggle = true;
+let sonic;
+let rings;
+
+/**
+ * Used to preload assets
+ */
+function preload() {
+    sonic = loadImage('./assets/sonic.png');
+    soundFormats('wav');
+    rings = loadSound('assets/rings.wav');
+}
 
 function setup() {
     createCanvas(400, 400);
 }
 
 function draw() {
-    //If mouse pressed do not refresh background (resets)
-    if(mouseToggle){
-        background(0);
-    }
-    //Set a color depending on key pressed
-    fill(colorKeyPressed);
-    //Draw a circle where mouse is
-    circle(mouseX,mouseY,50);
-
+    //Paint the sonic
+    image(sonic, 100, 100, 200, 300);
 }
 
-/**
- * Everytime you type a keyboard, this function is called automatically
- */
-function keyTyped(){
-    switch (key) {
-        case 'r':
-            colorKeyPressed = 'red';
-            break;
-        case 'g':
-            colorKeyPressed = 'green';
-            break;
-        case 'b':
-            colorKeyPressed = 'blue';
-            break;
-        default:
-            colorKeyPressed = 'white';
-    }
+function mousePressed(){
+    //Play a clip sound
+    rings.setVolume(0.5);
+    rings.play();
 }
-
-/**
- * If left arrow is pressed then we pause the program, and right arrow resumes it.
- */
-function keyPressed() {
-    if (keyCode === LEFT_ARROW) {
-        noLoop();
-    } else if (keyCode === RIGHT_ARROW) {
-        loop();
-    }
-}
-
-/**
- * Toggles mouse if pressed = true, false otherwise.
- */
-function mousePressed() {
-    mouseToggle = !mouseToggle;
-    // prevent default
-    return false;
-  }
