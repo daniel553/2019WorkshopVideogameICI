@@ -2,6 +2,7 @@
 let flyGuy;
 let enemy;
 let assets = {};
+let sound = true;
 
 function preload() {
     assets['ballon'] = loadImage('./assets/ballon.png');
@@ -10,6 +11,10 @@ function preload() {
     assets['enemy-right'] = loadImage('./assets/enemy-right.png');
     assets['enemy-left'] = loadImage('./assets/enemy-left.png');
     assets['ballon-enemy'] = loadImage('./assets/ballon-enemy.png');
+    assets['background'] = loadImage('./assets/background.png');
+    soundFormats('mp3');
+    assets['main-game'] = loadSound('./assets/main-game.mp3');
+    assets['game-over'] = loadSound('./assets/game-over.mp3');
 }
 
 function setup() {
@@ -24,10 +29,13 @@ function setup() {
     enemy.assets = assets;
     enemy.ballon1 = new Ballon(enemy.x, enemy.y, 10, -30, 'pink');
     enemy.ballon1.assets = assets;
+
+    assets['main-game'].setVolume(0.5);
+    assets['main-game'].play();
 }
 
 function draw() {
-    background(0);
+    background(assets['background']);
 
     //Show hero
     if(flyGuy.isDead() || enemy.isDead())
@@ -53,10 +61,41 @@ function gameOver() {
     textSize(24);
     text('GAME OVER', width / 2 - 95, height / 2);
     noLoop();
+    assets['main-game'].stop();
+    assets['game-over'].setVolume(0.5);
+    assets['game-over'].play();
 }
 
-//Reset
-function mousePressed(){
-    setup();
-    loop();
+document.getElementById('sound').onclick = ($event) => {
+    $event.preventDefault();
+    sound = !sound;
+    if(!sound){
+        assets['main-game'].stop(0);
+    }
+    else {
+        assets['main-game'].play();
+    }
+}
+
+window.onload = () => {
+    //Add events to the buttons when clicked
+
+    //Reset game (reload page)
+    document.getElementById('reset').onclick = ($event) => {
+        $event.preventDefault();
+        location.reload();
+    }
+
+
+    //Sound on off
+    document.getElementById('sound').onclick = ($event) => {
+        $event.preventDefault();
+        sound = !sound;
+        if(!sound && assets['main-game'].isLoaded()){
+            assets['main-game'].stop(0);
+        }
+        else {
+            assets['main-game'].play();
+        }
+    }
 }
