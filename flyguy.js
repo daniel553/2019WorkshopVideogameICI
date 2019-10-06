@@ -48,6 +48,7 @@ class FlyGuy {
         } else {
             //The bot
             if (this.followGuy) {
+                //Random movements from the bot to catch the target (followGuy)
                 if (Math.random() > 0.8) {
                     this.vx = this.followGuy.x < this.x ? -3 : 3;
                     this.vy = this.followGuy.y < this.y ? -3 : 3;
