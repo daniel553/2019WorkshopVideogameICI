@@ -8,12 +8,17 @@ class Ballon {
         this.offsetY = offsetY;
         this.color = color;
         this.popped = false;
+        this.assets = {};
     }
 
     show() {
         if (!this.popped) {
-            fill(this.color);
-            rect(this.x + this.offsetX, this.y + this.offsetY, this.w, this.h);
+            if(this.color === 'blue'){
+                image(assets['ballon'],this.x + this.offsetX, this.y + this.offsetY, this.w, this.h);
+            }else {
+                image(assets['ballon-enemy'],this.x + this.offsetX, this.y + this.offsetY, this.w, this.h);
+            }
+            
         }
     }
 

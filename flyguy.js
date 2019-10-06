@@ -20,6 +20,9 @@ class FlyGuy {
         if(this.color == 'red'){
             this.showFighter();
         }
+        else {
+            this.showEnemy();
+        }
 
         if (this.ballon1) {
             this.ballon1.updatePos(this);
@@ -34,6 +37,11 @@ class FlyGuy {
     showFighter() {
         let f = this.vx < 0 ? this.assets['fighter-left'] : this.assets['fighter-right'];
         image(f, this.x, this.y, this.w, this.h);
+    }
+
+    showEnemy() {
+        let e = this.vx <= 0 ? this.assets['enemy-left'] : this.assets['enemy-right'];
+        image(e, this.x, this.y, this.w, this.h);
     }
 
     move() {
